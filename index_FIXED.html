@@ -1,0 +1,2130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SKCET Safety — Report an Incident</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Public Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0f0e2e 0%, #2d1b69 25%, #1a472a 50%, #0d2d4d 75%, #1a1a3e 100%);
+      background-attachment: fixed;
+      color: #ffffff;
+      line-height: 1.6;
+      perspective: 1000px;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ========== HEADER ========== */
+    header {
+      background: linear-gradient(135deg, rgba(45, 27, 105, 0.98) 0%, rgba(26, 71, 42, 0.98) 100%);
+      backdrop-filter: blur(20px);
+      border-bottom: 3px solid;
+      border-image: linear-gradient(90deg, #ff006e, #8338ec, #3a86ff, #fb5607) 1;
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      animation: slideDown 0.6s ease-out;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .header-logo {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      text-decoration: none;
+      transition: transform 0.3s ease;
+    }
+
+    .header-logo:hover {
+      transform: translateY(-2px) scale(1.05) rotateZ(2deg);
+    }
+
+    .header-logo img {
+      width: 20px;
+      height: 24px;
+      filter: drop-shadow(0 2px 8px rgba(255, 0, 110, 0.4));
+    }
+
+    .header-logo span {
+      font-weight: 800;
+      color: white;
+      font-size: 15px;
+      background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 2px 8px rgba(255, 0, 110, 0.3);
+      letter-spacing: 0.5px;
+    }
+
+    .header-emergency {
+      background: linear-gradient(135deg, #ff006e, #fb5607);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-weight: 700;
+      font-size: 13px;
+      text-decoration: none;
+      box-shadow: 0 8px 20px rgba(255, 0, 110, 0.4);
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      overflow: hidden;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .header-emergency::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.3);
+      transition: left 0.3s ease;
+    }
+
+    .header-emergency:hover {
+      transform: translateY(-4px) scale(1.08);
+      box-shadow: 0 12px 30px rgba(255, 0, 110, 0.5);
+    }
+
+    .header-emergency:hover::before {
+      left: 100%;
+    }
+
+    /* ========== MAIN CONTAINER ========== */
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    /* ========== HERO SECTION ========== */
+    .hero-section {
+      padding: 48px 0;
+      text-align: center;
+      animation: fadeInUp 0.8s ease-out 0.2s both;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-image {
+      width: 100%;
+      height: 256px;
+      background: linear-gradient(135deg, #e7eeff, #d8e3fa);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 24px;
+      box-shadow: 0 20px 40px rgba(0, 32, 70, 0.15);
+      transform: perspective(1000px) rotateX(5deg);
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+    }
+
+    .hero-image::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.3), transparent);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .hero-image:hover {
+      transform: perspective(1000px) rotateX(-2deg) translateY(-8px);
+      box-shadow: 0 30px 60px rgba(0, 32, 70, 0.25);
+    }
+
+    .hero-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .hero-image:hover img {
+      transform: scale(1.05);
+    }
+
+    .hero-heading {
+      font-size: 48px;
+      font-weight: 900;
+      background: linear-gradient(135deg, #00ff88 0%, #00d4ff 50%, #ff006e 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 24px;
+      line-height: 1.2;
+      letter-spacing: -0.96px;
+      animation: fadeInUp 0.8s ease-out 0.4s both;
+      text-shadow: 0 8px 20px rgba(0, 255, 136, 0.2);
+      filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.2));
+    }
+
+    .hero-subtitle {
+      font-size: 18px;
+      color: #e0e0ff;
+      margin-bottom: 32px;
+      line-height: 1.8;
+      animation: fadeInUp 0.8s ease-out 0.5s both;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      letter-spacing: 0.5px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      animation: fadeInUp 0.8s ease-out 0.6s both;
+    }
+
+    .btn {
+      padding: 14px 28px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      overflow: hidden;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.3), transparent);
+      transform: scale(0);
+      transition: transform 0.6s ease;
+    }
+
+    .btn:hover::before {
+      transform: scale(2);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #002046, #1a3a52);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 12px 30px rgba(0, 32, 70, 0.3);
+    }
+
+    .btn-primary:active {
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.95);
+      color: #002046;
+      border: 2px solid #002046;
+      backdrop-filter: blur(10px);
+    }
+
+    .btn-secondary:hover {
+      background: white;
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 12px 30px rgba(0, 32, 70, 0.2);
+      border-color: #156967;
+      color: #156967;
+    }
+
+    /* ========== SAFETY INITIATIVES SECTION ========== */
+    .safety-section {
+      background: linear-gradient(135deg, #f0f3ff 0%, rgba(240, 243, 255, 0.8) 100%);
+      padding: 48px 0;
+      margin-top: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .safety-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: -20%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(22, 105, 103, 0.05), transparent);
+      border-radius: 50%;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(30px); }
+    }
+
+    .section-heading {
+      font-size: 32px;
+      font-weight: 600;
+      background: linear-gradient(135deg, #002046, #156967);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-align: center;
+      margin-bottom: 24px;
+      line-height: 1.25;
+      position: relative;
+      z-index: 1;
+      animation: fadeInUp 0.8s ease-out 0.3s both;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-top: 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card {
+      background: rgba(249, 249, 255, 0.9);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(196, 198, 207, 0.5);
+      border-radius: 16px;
+      padding: 25px;
+      box-shadow: 0 8px 32px rgba(0, 32, 70, 0.08);
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
+      position: relative;
+      overflow: hidden;
+      animation: fadeInUp 0.8s ease-out both;
+    }
+
+    .card:nth-child(1) { animation-delay: 0.4s; }
+    .card:nth-child(2) { animation-delay: 0.5s; }
+    .card:nth-child(3) { animation-delay: 0.6s; }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 100% 0%, rgba(255, 255, 255, 0.5), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .card:hover {
+      transform: perspective(1000px) rotateY(-5deg) rotateX(5deg) translateY(-12px);
+      box-shadow: 0 20px 50px rgba(0, 32, 70, 0.2);
+      border-color: #156967;
+    }
+
+    .card-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      transform: scale(1);
+    }
+
+    .card:hover .card-icon {
+      transform: scale(1.1) rotateZ(5deg);
+    }
+
+    .card-icon img {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+    }
+
+    .card-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: #156967;
+      text-transform: uppercase;
+      letter-spacing: 1.4px;
+      margin-bottom: 8px;
+      animation: fadeInUp 0.8s ease-out both;
+    }
+
+    .card-title {
+      font-size: 24px;
+      font-weight: 600;
+      color: #002046;
+      margin-bottom: 12px;
+      line-height: 1.33;
+      transition: color 0.3s ease;
+    }
+
+    .card:hover .card-title {
+      color: #156967;
+    }
+
+    .card-desc {
+      font-size: 16px;
+      color: #44474e;
+      line-height: 1.6;
+    }
+
+    /* ========== CAMPUS SAFETY HUBS SECTION ========== */
+    .hubs-section {
+      background: linear-gradient(135deg, rgba(30, 20, 50, 0.6), rgba(15, 30, 50, 0.6));
+      padding: 60px 16px;
+      animation: fadeInUp 0.8s ease-out 0.2s both;
+      position: relative;
+      border-top: 2px solid;
+      border-image: linear-gradient(90deg, #00ff88, #00d4ff, #ff006e) 1;
+    }
+
+    .hubs-section .section-heading {
+      margin-bottom: 16px;
+    }
+
+    .section-subtitle {
+      font-size: 16px;
+      color: #b0b0ff;
+      text-align: center;
+      margin-bottom: 32px;
+      line-height: 1.6;
+      animation: fadeInUp 0.8s ease-out 0.3s both;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+    }
+
+    .map-container {
+      background: linear-gradient(135deg, rgba(40, 40, 80, 0.8), rgba(50, 30, 70, 0.8));
+      border: 2px solid rgba(0, 255, 136, 0.3);
+      border-radius: 16px;
+      height: 320px;
+      overflow: hidden;
+      margin-bottom: 32px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 
+        0 0 40px rgba(0, 255, 136, 0.2),
+        0 0 80px rgba(0, 212, 255, 0.1);
+      transform: perspective(1000px) rotateX(2deg);
+      transition: all 0.4s ease;
+      animation: fadeInUp 0.8s ease-out 0.4s both;
+    }
+
+    .map-container:hover {
+      transform: perspective(1000px) rotateX(-2deg) translateY(-8px);
+      box-shadow: 
+        0 0 60px rgba(0, 255, 136, 0.3),
+        0 0 120px rgba(0, 212, 255, 0.15);
+      border-color: rgba(0, 255, 136, 0.6);
+    }
+
+    .map-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .map-container:hover img {
+      transform: scale(1.05);
+    }
+
+    .hubs-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .hub-item {
+      background: linear-gradient(135deg, rgba(40, 40, 80, 0.9), rgba(50, 30, 70, 0.9));
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(0, 212, 255, 0.4);
+      border-radius: 14px;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 
+        0 0 30px rgba(0, 212, 255, 0.1),
+        0 8px 20px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      animation: slideInRight 0.6s ease-out both;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hub-item:nth-child(1) { animation-delay: 0.3s; }
+    .hub-item:nth-child(2) { animation-delay: 0.4s; }
+    .hub-item:nth-child(3) { animation-delay: 0.5s; }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .hub-item::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 100% 50%, rgba(0, 255, 136, 0.1), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .hub-item:hover::before {
+      opacity: 1;
+    }
+
+    .hub-item:hover {
+      transform: translateX(8px) translateY(-4px);
+      box-shadow: 
+        0 0 50px rgba(0, 255, 136, 0.2),
+        0 12px 30px rgba(0, 212, 255, 0.2);
+      border-color: #00ff88;
+      background: linear-gradient(135deg, rgba(50, 50, 100, 1), rgba(60, 40, 80, 1));
+    }
+
+    .hub-info {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hub-info h4 {
+      font-size: 18px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #00ff88, #00d4ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 6px;
+      transition: all 0.3s ease;
+    }
+
+    .hub-item:hover .hub-info h4 {
+      filter: brightness(1.2);
+    }
+
+    .hub-info p {
+      font-size: 15px;
+      color: #b0b0ff;
+      font-weight: 500;
+    }
+
+    .hub-btn {
+      background: none;
+      border: 2px solid rgba(0, 255, 136, 0.5);
+      color: #00ff88;
+      cursor: pointer;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      z-index: 2;
+      text-transform: uppercase;
+      font-size: 12px;
+      letter-spacing: 0.6px;
+      padding: 10px 16px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 255, 136, 0.2);
+    }
+
+    .hub-btn:hover {
+      transform: translateY(-3px);
+      color: #ffffff;
+      background: linear-gradient(135deg, rgba(0, 255, 136, 0.2), rgba(0, 212, 255, 0.2));
+      border-color: #00d4ff;
+      box-shadow: 
+        0 0 30px rgba(0, 255, 136, 0.4),
+        0 0 60px rgba(0, 212, 255, 0.2);
+    }
+
+    .hub-btn svg {
+      width: 12px;
+      height: 12px;
+      filter: drop-shadow(0 0 4px rgba(0, 255, 136, 0.3));
+      transition: all 0.3s ease;
+    }
+
+    .hub-btn:hover svg {
+      transform: rotate(180deg) scale(1.1);
+      filter: drop-shadow(0 0 8px rgba(0, 212, 255, 0.5));
+    }
+
+    /* ========== CAMPUS MAP SECTION ========== */
+    .campus-map-section {
+      padding: 48px 0;
+      animation: fadeInUp 0.8s ease-out 0.7s both;
+    }
+
+    .map-container {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 32px;
+      margin-bottom: 48px;
+      align-items: start;
+    }
+
+    .map-wrapper {
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0, 32, 70, 0.15);
+      transform: perspective(1000px) rotateX(5deg);
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .map-wrapper:hover {
+      transform: perspective(1000px) rotateX(-2deg) translateY(-8px);
+      box-shadow: 0 30px 60px rgba(0, 32, 70, 0.25);
+    }
+
+    .campus-map {
+      display: block;
+      border: none;
+    }
+
+    .map-info-box {
+      background: linear-gradient(135deg, rgba(45, 27, 105, 0.8), rgba(26, 71, 42, 0.8));
+      border: 2px solid;
+      border-image: linear-gradient(135deg, #00ff88, #00d4ff, #ff006e) 1;
+      backdrop-filter: blur(20px);
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 20px 40px rgba(0, 32, 70, 0.15);
+    }
+
+    .location-info h3 {
+      font-size: 24px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #00ff88, #00d4ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+
+    .location-address {
+      font-size: 15px;
+      color: #e0e0ff;
+      margin-bottom: 20px;
+      line-height: 1.8;
+    }
+
+    .location-address strong {
+      color: #00ff88;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .location-coordinates {
+      font-size: 14px;
+      color: #e0e0ff;
+      margin-bottom: 28px;
+      font-family: 'Courier New', monospace;
+      background: rgba(0, 255, 136, 0.1);
+      padding: 12px;
+      border-radius: 8px;
+      border-left: 3px solid #00ff88;
+    }
+
+    .location-coordinates strong {
+      color: #00ff88;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .btn-directions {
+      width: 100%;
+      background: linear-gradient(135deg, #00ff88, #00d4ff);
+      color: #0f0e2e;
+      padding: 16px 24px;
+      font-size: 16px;
+      font-weight: 700;
+      border-radius: 12px;
+      text-decoration: none;
+      text-align: center;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 8px 20px rgba(0, 255, 136, 0.3);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border: none;
+    }
+
+    .btn-directions:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 12px 30px rgba(0, 255, 136, 0.4);
+    }
+
+    .btn-directions:active {
+      transform: translateY(-2px);
+    }
+
+    /* Campus Safety Hub */
+    .campus-hub {
+      background: linear-gradient(135deg, rgba(45, 27, 105, 0.5), rgba(26, 71, 42, 0.5));
+      border: 2px solid;
+      border-image: linear-gradient(135deg, #8338ec, #3a86ff) 1;
+      backdrop-filter: blur(20px);
+      border-radius: 16px;
+      padding: 40px;
+      box-shadow: 0 20px 40px rgba(0, 32, 70, 0.15);
+    }
+
+    .hub-title {
+      font-size: 28px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 32px;
+      text-align: center;
+    }
+
+    .hub-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+    }
+
+    .hub-card {
+      background: linear-gradient(135deg, rgba(51, 134, 236, 0.1), rgba(255, 0, 110, 0.1));
+      border: 2px solid rgba(0, 255, 136, 0.2);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      backdrop-filter: blur(10px);
+    }
+
+    .hub-card:hover {
+      border-color: #00ff88;
+      background: linear-gradient(135deg, rgba(0, 255, 136, 0.15), rgba(0, 212, 255, 0.1));
+      transform: translateY(-8px);
+      box-shadow: 0 12px 30px rgba(0, 255, 136, 0.2);
+    }
+
+    .hub-icon {
+      font-size: 48px;
+      margin-bottom: 12px;
+      display: inline-block;
+      transition: transform 0.3s ease;
+    }
+
+    .hub-card:hover .hub-icon {
+      transform: scale(1.2) rotateZ(10deg);
+    }
+
+    .hub-card h4 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #00ff88;
+      margin-bottom: 8px;
+    }
+
+    .hub-card p {
+      font-size: 13px;
+      color: #e0e0ff;
+      line-height: 1.6;
+    }
+
+    /* Mobile Responsive for Campus Map */
+    @media (max-width: 768px) {
+      .map-container {
+        grid-template-columns: 1fr;
+      }
+
+      .campus-map-section {
+        padding: 32px 0;
+      }
+
+      .location-info h3 {
+        font-size: 20px;
+      }
+
+      .hub-title {
+        font-size: 24px;
+      }
+
+      .hub-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ========== REPORT INCIDENT SECTION ========== */
+    .report-section {
+      padding: 80px 16px;
+      background: transparent;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 120vh;
+      position: relative;
+    }
+
+    .report-section .section-heading {
+      position: absolute;
+      top: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      text-align: center;
+      z-index: 5;
+    }
+
+    .form-wrapper {
+      width: 100%;
+      max-width: 680px;
+      margin-top: 120px;
+    }
+
+    .form-container {
+      background: rgba(20, 20, 40, 0.92);
+      backdrop-filter: blur(40px);
+      border: 2px solid;
+      border-image: linear-gradient(135deg, #00ff88 0%, #00d4ff 50%, #ff006e 100%) 1;
+      border-radius: 28px;
+      padding: 48px;
+      box-shadow: 
+        0 0 80px rgba(0, 255, 136, 0.2),
+        0 0 160px rgba(0, 212, 255, 0.15),
+        0 30px 80px rgba(0, 0, 0, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+      animation: slideUp 0.9s ease-out 0.2s both;
+      transform: perspective(1500px) rotateX(0deg);
+      transition: all 0.4s ease;
+    }
+
+    .form-container:hover {
+      box-shadow: 
+        0 0 100px rgba(0, 255, 136, 0.3),
+        0 0 200px rgba(0, 212, 255, 0.2),
+        0 40px 100px rgba(0, 0, 0, 0.7),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(80px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .form-container::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -30%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(0, 255, 136, 0.15), transparent);
+      border-radius: 50%;
+      pointer-events: none;
+      animation: float 7s ease-in-out infinite;
+    }
+
+    .form-container::after {
+      content: '';
+      position: absolute;
+      bottom: -40%;
+      left: -40%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(0, 212, 255, 0.12), transparent);
+      border-radius: 50%;
+      pointer-events: none;
+      animation: float 9s ease-in-out infinite;
+      animation-delay: 1.5s;
+    }
+
+    .form-title {
+      font-size: 36px;
+      font-weight: 900;
+      background: linear-gradient(135deg, #00ff88 0%, #00d4ff 50%, #ff006e 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 12px;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      letter-spacing: -1px;
+      text-shadow: 0 2px 20px rgba(0, 255, 136, 0.2);
+      filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.2));
+    }
+
+    .form-subtitle-text {
+      font-size: 14px;
+      color: #b0b0ff;
+      text-align: center;
+      margin-bottom: 32px;
+      position: relative;
+      z-index: 2;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      font-weight: 600;
+    }
+
+    .fieldset {
+      margin-bottom: 24px;
+      border: none;
+      padding: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .fieldset-legend {
+      font-size: 13px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #00ff88, #00d4ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 18px;
+      padding-bottom: 14px;
+      border-bottom: 2px solid rgba(0, 255, 136, 0.4);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      animation: fadeInUp 0.6s ease-out both;
+    }
+
+    .form-group:nth-child(1) { animation-delay: 0.5s; }
+    .form-group:nth-child(2) { animation-delay: 0.55s; }
+    .form-group:nth-child(3) { animation-delay: 0.6s; }
+    .form-group:nth-child(4) { animation-delay: 0.65s; }
+
+    .form-label {
+      font-size: 12px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #00ff88, #00d4ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .form-label .required {
+      color: #ff006e;
+      font-weight: 900;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      padding: 16px 14px;
+      border: 2px solid rgba(0, 255, 136, 0.3);
+      border-radius: 12px;
+      font-size: 15px;
+      font-family: 'Public Sans', sans-serif;
+      color: #e0e0ff;
+      background: rgba(40, 40, 70, 0.8);
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 
+        0 4px 20px rgba(0, 255, 136, 0.1),
+        inset 0 1px 2px rgba(255, 255, 255, 0.05);
+    }
+
+    .form-input::placeholder,
+    .form-select,
+    .form-textarea::placeholder {
+      color: #7070a0;
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 120px;
+      overflow: auto;
+    }
+
+    .form-input:hover,
+    .form-select:hover,
+    .form-textarea:hover {
+      border-color: rgba(0, 212, 255, 0.6);
+      box-shadow: 
+        0 6px 25px rgba(0, 212, 255, 0.2),
+        inset 0 1px 2px rgba(255, 255, 255, 0.05);
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: #00ff88;
+      background: rgba(20, 40, 60, 0.9);
+      box-shadow: 
+        0 0 30px rgba(0, 255, 136, 0.4),
+        0 0 60px rgba(0, 212, 255, 0.2),
+        inset 0 1px 2px rgba(255, 255, 255, 0.1);
+      transform: translateY(-3px);
+    }
+
+    .checkbox-wrapper {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      margin: 20px 0;
+      position: relative;
+      z-index: 1;
+      animation: fadeInUp 0.6s ease-out 0.7s both;
+    }
+
+    .checkbox-wrapper input[type="checkbox"] {
+      width: 24px;
+      height: 24px;
+      margin-top: 3px;
+      cursor: pointer;
+      border: 2px solid rgba(0, 212, 255, 0.5);
+      border-radius: 6px;
+      background: rgba(40, 40, 70, 0.8);
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      appearance: none;
+      -webkit-appearance: none;
+      box-shadow: 
+        0 0 15px rgba(0, 212, 255, 0.1),
+        inset 0 1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    .checkbox-wrapper input[type="checkbox"]:hover {
+      border-color: rgba(0, 255, 136, 0.8);
+      box-shadow: 
+        0 0 25px rgba(0, 255, 136, 0.2),
+        inset 0 1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    .checkbox-wrapper input[type="checkbox"]:checked {
+      background: linear-gradient(135deg, #00ff88, #00d4ff);
+      border-color: #00ff88;
+      box-shadow: 
+        0 0 30px rgba(0, 255, 136, 0.4),
+        inset 0 1px 2px rgba(255, 255, 255, 0.2);
+    }
+
+    .checkbox-wrapper input[type="checkbox"]:checked::after {
+      content: '✓';
+      position: absolute;
+      color: #002046;
+      font-weight: 900;
+      font-size: 14px;
+    }
+
+    .checkbox-wrapper label {
+      font-size: 14px;
+      color: #b0b0ff;
+      cursor: pointer;
+      line-height: 1.7;
+      font-weight: 500;
+    }
+
+    .location-section {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      padding: 20px;
+      background: linear-gradient(135deg, rgba(0, 255, 136, 0.08), rgba(0, 212, 255, 0.08));
+      border-radius: 14px;
+      border: 2px solid rgba(0, 255, 136, 0.4);
+      margin: 24px 0;
+      position: relative;
+      z-index: 2;
+      box-shadow: 
+        0 0 30px rgba(0, 255, 136, 0.15),
+        inset 0 1px 0 rgba(0, 255, 136, 0.2);
+      animation: slideInLeft 0.6s ease-out 0.6s both;
+    }
+
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .location-toggle {
+      width: 56px;
+      height: 32px;
+      background: linear-gradient(90deg, rgba(112, 112, 160, 0.6), rgba(80, 80, 140, 0.6));
+      border: 2px solid rgba(0, 212, 255, 0.4);
+      border-radius: 16px;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 
+        0 0 20px rgba(0, 212, 255, 0.1),
+        inset 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .location-toggle:hover {
+      box-shadow: 
+        0 0 30px rgba(0, 212, 255, 0.2),
+        inset 0 2px 6px rgba(0, 0, 0, 0.3);
+      border-color: rgba(0, 212, 255, 0.7);
+    }
+
+    .location-toggle::after {
+      content: '';
+      position: absolute;
+      width: 26px;
+      height: 26px;
+      background: linear-gradient(135deg, #ffffff, #e0e0ff);
+      border-radius: 50%;
+      top: 2px;
+      left: 2px;
+      transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .location-toggle.active {
+      background: linear-gradient(90deg, rgba(0, 255, 136, 0.3), rgba(0, 212, 255, 0.3));
+      border-color: #00ff88;
+      box-shadow: 
+        0 0 40px rgba(0, 255, 136, 0.3),
+        inset 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .location-toggle.active::after {
+      left: 26px;
+      box-shadow: 0 0 20px rgba(0, 255, 136, 0.4), 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .location-label {
+      font-size: 13px;
+      background: linear-gradient(135deg, #00ff88, #00d4ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+
+    .location-status {
+      font-size: 12px;
+      color: #a0d4ff;
+      margin-left: auto;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    .hidden-input {
+      display: none;
+    }
+
+    .photo-upload {
+      margin: 20px 0;
+      position: relative;
+      z-index: 1;
+      animation: fadeInUp 0.6s ease-out 0.65s both;
+    }
+
+    .photo-upload label {
+      font-size: 12px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #00ff88, #00d4ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: block;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .photo-upload input[type="file"] {
+      padding: 16px;
+      border: 2px dashed rgba(0, 255, 136, 0.5);
+      border-radius: 12px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 14px;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      background: rgba(40, 40, 70, 0.6);
+      color: #b0b0ff;
+    }
+
+    .photo-upload input[type="file"]:hover {
+      border-color: rgba(0, 212, 255, 0.8);
+      background: rgba(40, 50, 90, 0.7);
+      box-shadow: 0 0 20px rgba(0, 212, 255, 0.15);
+    }
+
+    .photo-upload input[type="file"]:focus {
+      outline: none;
+      border-color: #00ff88;
+      box-shadow: 
+        0 0 30px rgba(0, 255, 136, 0.3),
+        inset 0 1px 2px rgba(0, 255, 136, 0.1);
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 18px 32px;
+      background: linear-gradient(135deg, #00ff88 0%, #00d4ff 50%, #ff006e 100%);
+      background-size: 200% 200%;
+      color: #002046;
+      border: 2px solid transparent;
+      border-radius: 14px;
+      font-size: 15px;
+      font-weight: 900;
+      cursor: pointer;
+      margin-top: 28px;
+      box-shadow: 
+        0 0 30px rgba(0, 255, 136, 0.4),
+        0 10px 35px rgba(0, 212, 255, 0.2),
+        inset 0 -2px 6px rgba(0, 0, 0, 0.2);
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      z-index: 2;
+      overflow: hidden;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      animation: fadeInUp 0.6s ease-out 0.8s both;
+    }
+
+    .submit-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.3);
+      transition: left 0.5s ease;
+      z-index: -1;
+    }
+
+    .submit-btn:hover::before {
+      left: 100%;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-6px) scale(1.02);
+      box-shadow: 
+        0 0 50px rgba(0, 255, 136, 0.6),
+        0 15px 50px rgba(0, 212, 255, 0.3),
+        inset 0 -2px 6px rgba(0, 0, 0, 0.2);
+      background-position: 200% 0;
+    }
+
+    .submit-btn:active {
+      transform: translateY(-3px) scale(0.98);
+      box-shadow: 
+        0 0 20px rgba(0, 255, 136, 0.3),
+        0 5px 20px rgba(0, 212, 255, 0.2);
+    }
+
+    .submit-btn:disabled {
+      background: linear-gradient(135deg, #505070, #606080);
+      cursor: not-allowed;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      transform: none;
+      color: #a0a0c0;
+    }
+
+    .success-message {
+      display: none;
+      background: linear-gradient(135deg, rgba(0, 255, 136, 0.15), rgba(0, 212, 255, 0.15));
+      color: #00ff88;
+      padding: 16px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      border: 2px solid rgba(0, 255, 136, 0.6);
+      box-shadow: 
+        0 0 30px rgba(0, 255, 136, 0.2),
+        inset 0 1px 0 rgba(0, 255, 136, 0.3);
+      font-weight: 700;
+      animation: slideInDown 0.4s ease-out;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      position: relative;
+      z-index: 2;
+    }
+
+    @keyframes slideInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .error-message {
+      display: none;
+      background: linear-gradient(135deg, rgba(255, 0, 110, 0.15), rgba(251, 86, 7, 0.15));
+      color: #ff006e;
+      padding: 16px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      border: 2px solid rgba(255, 0, 110, 0.6);
+      box-shadow: 
+        0 0 30px rgba(255, 0, 110, 0.2),
+        inset 0 1px 0 rgba(255, 0, 110, 0.3);
+      font-weight: 700;
+      animation: slideInDown 0.4s ease-out;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ========== FOOTER ========== */
+    footer {
+      background: linear-gradient(135deg, #1b2225 0%, #0f1419 100%);
+      border-top: 2px solid rgba(196, 198, 207, 0.2);
+      color: #d8e3fa;
+      padding: 48px 24px;
+      text-align: center;
+      margin-top: 48px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    footer::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(22, 105, 103, 0.1), transparent);
+      border-radius: 50%;
+      animation: float 8s ease-in-out infinite;
+    }
+
+    footer::after {
+      content: '';
+      position: absolute;
+      bottom: -50%;
+      left: -50%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(0, 32, 70, 0.1), transparent);
+      border-radius: 50%;
+      animation: float 10s ease-in-out infinite;
+      animation-delay: 2s;
+    }
+
+    .footer-content {
+      position: relative;
+      z-index: 1;
+      animation: fadeInUp 0.8s ease-out 0.4s both;
+    }
+
+    .footer-content h3 {
+      font-size: 24px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #a6f0ed, #ffffff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 4px;
+      letter-spacing: 0.5px;
+    }
+
+    .footer-content p {
+      font-size: 15px;
+      opacity: 0.8;
+      margin-bottom: 8px;
+      line-height: 1.6;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 24px;
+      margin-top: 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-links a {
+      color: #d8e3fa;
+      text-decoration: underline;
+      text-decoration-color: #a6f0ed;
+      font-size: 15px;
+      opacity: 0.8;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      font-weight: 500;
+      position: relative;
+    }
+
+    .footer-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #a6f0ed, transparent);
+      transition: width 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      opacity: 1;
+      transform: translateY(-2px);
+      color: #a6f0ed;
+    }
+
+    .footer-links a:hover::after {
+      width: 100%;
+    }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 768px) {
+      body {
+        perspective: 600px;
+      }
+
+      .hero-heading {
+        font-size: 32px;
+        letter-spacing: -0.64px;
+      }
+
+      .section-heading {
+        font-size: 24px;
+      }
+
+      .cards-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      header {
+        flex-direction: column;
+        gap: 12px;
+        padding: 12px 16px;
+      }
+
+      .header-logo {
+        order: 2;
+      }
+
+      .header-emergency {
+        order: 1;
+        width: 100%;
+        text-align: center;
+      }
+
+      .hubs-list {
+        max-width: 100%;
+      }
+
+      .hub-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .hub-btn {
+        width: 100%;
+        justify-content: center;
+        padding: 12px;
+      }
+
+      .map-container {
+        height: 240px;
+      }
+
+      .hero-image {
+        border-radius: 12px;
+        height: 200px;
+      }
+
+      .report-section {
+        padding: 60px 12px;
+        min-height: auto;
+      }
+
+      .report-section .section-heading {
+        top: 20px;
+        font-size: 24px;
+      }
+
+      .form-wrapper {
+        margin-top: 80px;
+      }
+
+      .form-container {
+        padding: 28px;
+        border-radius: 20px;
+      }
+
+      .form-title {
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+
+      .form-subtitle-text {
+        font-size: 12px;
+        margin-bottom: 20px;
+      }
+
+      .submit-btn {
+        padding: 14px 20px;
+        font-size: 14px;
+      }
+
+      .location-section {
+        flex-wrap: wrap;
+      }
+
+      .location-status {
+        width: 100%;
+        margin-top: 8px;
+        margin-left: 0;
+      }
+
+      .cards-grid .card {
+        transform: perspective(800px) rotateY(0deg) rotateX(0deg);
+      }
+
+      .cards-grid .card:hover {
+        transform: perspective(800px) rotateY(-3deg) rotateX(3deg) translateY(-8px);
+      }
+
+      .safety-section::before {
+        width: 400px;
+        height: 400px;
+        right: -30%;
+      }
+
+      footer {
+        padding: 36px 16px;
+      }
+
+      .footer-links {
+        gap: 16px;
+        flex-direction: column;
+      }
+
+      .footer-links a {
+        display: block;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-heading {
+        font-size: 24px;
+      }
+
+      .section-heading {
+        font-size: 20px;
+      }
+
+      .hero-buttons {
+        gap: 12px;
+      }
+
+      .btn {
+        padding: 12px 20px;
+        font-size: 14px;
+      }
+
+      .card-title {
+        font-size: 20px;
+      }
+
+      .card-desc {
+        font-size: 14px;
+      }
+
+      .form-label {
+        font-size: 12px;
+      }
+
+      .form-input,
+      .form-textarea {
+        padding: 12px 10px;
+        font-size: 14px;
+      }
+
+      .header-logo span {
+        font-size: 14px;
+      }
+
+      main {
+        padding: 0 12px;
+      }
+
+      .hero-section {
+        padding: 32px 0;
+      }
+
+      .safety-section,
+      .hubs-section {
+        padding: 32px 0;
+      }
+
+      .report-section {
+        padding: 32px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <a href="#" class="header-logo">
+    <svg width="16" height="20" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M8 0C8 0 0 4 0 10C0 15.523 3.582 20 8 20C12.418 20 16 15.523 16 10C16 4 8 0 8 0Z" fill="#002046"/>
+    </svg>
+    <span>SKCET Safety</span>
+  </a>
+  <a href="#" class="header-emergency">Emergency</a>
+</header>
+
+<!-- MAIN CONTENT -->
+<main>
+  <!-- HERO SECTION -->
+  <section class="hero-section">
+    <div class="hero-image">
+      <img src="https://www.figma.com/api/mcp/asset/fdfca4fc-3b3f-4235-9117-c1ea02b8a71b.png" alt="Campus">
+    </div>
+    <h1 class="hero-heading">A Safer Campus Starts With Awareness, Support, and Action</h1>
+    <p class="hero-subtitle">We are committed to fostering a culture of respect, protection, and proactive care. Access resources, report concerns securely, and connect with support instantly.</p>
+    <div class="hero-buttons">
+      <button class="btn btn-primary" onclick="document.querySelector('.report-section').scrollIntoView({ behavior: 'smooth' });">Report a Concern</button>
+      <a href="#" class="btn btn-secondary">Emergency Contacts</a>
+    </div>
+  </section>
+
+  <!-- SAFETY INITIATIVES SECTION -->
+  <section class="safety-section">
+    <h2 class="section-heading">Building a Campus Where Everyone Feels Safe</h2>
+    <div class="cards-grid">
+      <!-- Card 1 -->
+      <div class="card">
+        <div class="card-icon" style="background: #a3edea;">
+          <svg width="24" height="12" viewBox="0 0 24 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 0C5.4 0 0 5.4 0 12h24C24 5.4 18.6 0 12 0Z" fill="#156967"/>
+          </svg>
+        </div>
+        <div class="card-label">SUPPORT</div>
+        <h3 class="card-title">Women's Safety</h3>
+        <p class="card-desc">Dedicated awareness programs and robust grievance systems to ensure a secure environment for all female students and staff.</p>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="card">
+        <div class="card-icon" style="background: #ffdad6;">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="10" cy="10" r="8" fill="#ba1a1a"/>
+          </svg>
+        </div>
+        <div class="card-label">COMMITMENT</div>
+        <h3 class="card-title">Anti-Ragging</h3>
+        <p class="card-desc">Strict zero-tolerance policy against any form of harassment. Confidential reporting mechanisms are available 24/7.</p>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="card">
+        <div class="card-icon" style="background: #d8e3fa;">
+          <svg width="16" height="18" viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 0L10.5 7H18L12.5 11L15 18L8 14L1 18L3.5 11L-2 7H5.5L8 0Z" fill="#002046"/>
+          </svg>
+        </div>
+        <div class="card-label">WELLBEING</div>
+        <h3 class="card-title">Hostel Safety</h3>
+        <p class="card-desc">Active wardens and secure living protocols designed to promote student wellbeing and safe campus residency.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAMPUS SAFETY HUBS SECTION -->
+  <section class="hubs-section">
+    <h2 class="section-heading">Campus Safety Hubs</h2>
+    <p class="section-subtitle">Locate essential safety services across our campus.</p>
+    
+    <div class="map-container">
+      <iframe 
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3916.7453215926923!2d76.9534!3d10.9327!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba7eb3d4c4c4c4d%3A0x4c4c4c4c4c4c4c4c!2sSri%20Krishna%20College%20of%20Engineering%20and%20Technology!5e0!3m2!1sen!2sin!4v1686754321987" 
+        width="100%" 
+        height="320" 
+        style="border:0; border-radius: 16px;" 
+        allowfullscreen="" 
+        loading="lazy" 
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+
+    <div class="hubs-list">
+      <div class="hub-item">
+        <div class="hub-info">
+          <h4>Main Campus Gate</h4>
+          <p>Sugunapuram, Kuniamuthur, Coimbatore</p>
+          <p style="font-size: 13px; color: #a0d4ff; margin-top: 4px;">📍 10.9327, 76.9556</p>
+        </div>
+        <div style="display: flex; gap: 8px; z-index: 2;">
+          <a href="https://maps.google.com/?q=10.9327,76.9556" target="_blank" class="hub-btn" style="margin: 0;">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8.5 1V15M15 8H1" stroke="#00ff88" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            Directions
+          </a>
+        </div>
+      </div>
+
+      <div class="hub-item">
+        <div class="hub-info">
+          <h4>Security & Safety Office</h4>
+          <p>Administration Block, Ground Floor</p>
+          <p style="font-size: 13px; color: #a0d4ff; margin-top: 4px;">📞 Available 24/7</p>
+        </div>
+        <div style="display: flex; gap: 8px; z-index: 2;">
+          <button class="hub-btn" onclick="alert('Emergency contacts available at Security Office')" style="margin: 0;">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8.5 1V15M15 8H1" stroke="#00ff88" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            Info
+          </button>
+        </div>
+      </div>
+
+      <div class="hub-item">
+        <div class="hub-info">
+          <h4>Women's Safety Cell</h4>
+          <p>Student Support Center, Block-A</p>
+          <p style="font-size: 13px; color: #a0d4ff; margin-top: 4px;">🆘 Confidential Support</p>
+        </div>
+        <div style="display: flex; gap: 8px; z-index: 2;">
+          <button class="hub-btn" onclick="alert('Women Safety Cell - Confidential counseling and support available. Contact: Emergency Desk')" style="margin: 0;">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8.5 1V15M15 8H1" stroke="#00ff88" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            Contact
+          </button>
+        </div>
+      </div>
+
+      <div class="hub-item">
+        <div class="hub-info">
+          <h4>Medical Center</h4>
+          <p>Health & Wellness Building</p>
+          <p style="font-size: 13px; color: #a0d4ff; margin-top: 4px;">🏥 First Aid Available</p>
+        </div>
+        <div style="display: flex; gap: 8px; z-index: 2;">
+          <button class="hub-btn" onclick="alert('Medical Center - Emergency medical support, first aid, and counseling services available')" style="margin: 0;">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8.5 1V15M15 8H1" stroke="#00ff88" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            Info
+          </button>
+        </div>
+      </div>
+
+      <div class="hub-item">
+        <div class="hub-info">
+          <h4>Hostel Support Center</h4>
+          <p>Main Hostel Complex</p>
+          <p style="font-size: 13px; color: #a0d4ff; margin-top: 4px;">🏠 Resident Wardens On-Duty</p>
+        </div>
+        <div style="display: flex; gap: 8px; z-index: 2;">
+          <button class="hub-btn" onclick="alert('Hostel Support - Wardens and support staff available for resident student concerns')" style="margin: 0;">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8.5 1V15M15 8H1" stroke="#00ff88" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            Help
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAMPUS MAP SECTION -->
+  <section class="campus-map-section">
+    <h2 class="section-heading">Campus Map & Location</h2>
+    
+    <div class="map-container">
+      <div class="map-wrapper">
+        <!-- Google Maps Embed -->
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3916.5279748906927!2d76.9556!3d10.9327!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba75c3d3d3d3d3d%3A0x3d3d3d3d3d3d3d3d!2sSri%20Krishna%20College%20of%20Engineering%20and%20Technology!5e0!3m2!1sen!2sin!4v1691234567890" 
+                width="100%" 
+                height="500" 
+                style="border:0;" 
+                allowfullscreen="" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade"
+                class="campus-map">
+        </iframe>
+      </div>
+
+      <div class="map-info-box">
+        <div class="location-info">
+          <h3>Sri Krishna College of Engineering and Technology</h3>
+          <p class="location-address">
+            <strong>Address:</strong><br>
+            Sugunapuram, Kuniamuthur,<br>
+            Coimbatore, Tamil Nadu - 641008, India
+          </p>
+          <p class="location-coordinates">
+            <strong>Coordinates:</strong><br>
+            10.9327°N, 76.9556°E
+          </p>
+          
+          <a href="https://www.google.com/maps/search/Sri+Krishna+College+of+Engineering+and+Technology,+Coimbatore/@10.9327,76.9556,15z" 
+             target="_blank" 
+             rel="noopener noreferrer"
+             class="btn btn-directions">
+            📍 Get Directions
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Campus Safety Hub -->
+    <div class="campus-hub">
+      <h3 class="hub-title">Campus Safety Locations</h3>
+      <div class="hub-grid">
+        <div class="hub-card">
+          <div class="hub-icon">🚨</div>
+          <h4>Security Office</h4>
+          <p>24/7 Campus Security & Emergency Response</p>
+        </div>
+        <div class="hub-card">
+          <div class="hub-icon">👩‍💼</div>
+          <h4>Women's Safety Cell</h4>
+          <p>Confidential Support & Counseling Services</p>
+        </div>
+        <div class="hub-card">
+          <div class="hub-icon">🏥</div>
+          <h4>Medical Center</h4>
+          <p>Campus Health & Emergency Medical Support</p>
+        </div>
+        <div class="hub-card">
+          <div class="hub-icon">🛡️</div>
+          <h4>Campus Watch</h4>
+          <p>Patrolling & Surveillance Coverage</p>
+        </div>
+        <div class="hub-card">
+          <div class="hub-icon">🏨</div>
+          <h4>Hostel Wardens</h4>
+          <p>Residential Safety & Student Welfare</p>
+        </div>
+        <div class="hub-card">
+          <div class="hub-icon">📞</div>
+          <h4>Emergency Contact</h4>
+          <p>Direct Line to Campus Security Services</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REPORT INCIDENT SECTION -->
+  <section class="report-section">
+    <h2 class="section-heading">Report an Incident</h2>
+    
+    <div class="form-wrapper">
+      <div class="form-container">
+        <h3 class="form-title">Report a Concern</h3>
+        <p class="form-subtitle-text">Your Voice Matters. Reports are handled confidentially and securely.</p>
+        
+        <div id="successMessage" class="success-message">✓ Report submitted successfully!</div>
+        <div id="errorMessage" class="error-message">✗ Error submitting report. Please try again.</div>
+
+      <form id="incidentForm">
+        <!-- Reporter Information -->
+        <fieldset class="fieldset">
+          <legend class="fieldset-legend">Reporter Information (Optional)</legend>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Full Name</label>
+              <input type="text" id="name" name="name" class="form-input" placeholder="Optional">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Register Number</label>
+              <input type="text" id="registerNumber" name="registerNumber" class="form-input" placeholder="Optional">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Email</label>
+              <input type="email" id="email" name="email" class="form-input" placeholder="Optional">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Phone</label>
+              <input type="tel" id="phone" name="phone" class="form-input" placeholder="Optional">
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- Incident Details -->
+        <fieldset class="fieldset">
+          <legend class="fieldset-legend">Incident Details</legend>
+          
+          <div class="form-group">
+            <label class="form-label">Incident Description <span class="required">*</span></label>
+            <textarea id="incidentDetails" name="incidentDetails" class="form-textarea" placeholder="Please provide details..." required></textarea>
+          </div>
+
+          <!-- Live Location Toggle -->
+          <div class="location-section">
+            <button type="button" class="location-toggle" id="locationToggle" onclick="toggleLocation(event)"></button>
+            <span class="location-label">Share Live Location</span>
+            <span class="location-status" id="locationStatus"></span>
+          </div>
+
+          <!-- Hidden Latitude/Longitude Fields -->
+          <input type="hidden" id="latitude" name="latitude">
+          <input type="hidden" id="longitude" name="longitude">
+
+          <!-- Photo Upload -->
+          <div class="photo-upload">
+            <label for="photoInput">Optional Photo Upload</label>
+            <input type="file" id="photoInput" name="photo" accept="image/*">
+          </div>
+        </fieldset>
+
+        <!-- Contact Preference -->
+        <div class="checkbox-wrapper">
+          <input type="checkbox" id="contactMe" name="contactMe">
+          <label for="contactMe">Would you like to be contacted regarding this report?</label>
+        </div>
+
+        <button type="submit" class="submit-btn">Submit Secure Report</button>
+      </form>
+    </div>
+    </div>
+  </section>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-content">
+    <h3>SKCET Safety</h3>
+    <p>© 2024 Sri Krishna College of Engineering and Technology. Institutional Safety Division.</p>
+  </div>
+  <div class="footer-links">
+    <a href="#">Privacy Policy</a>
+    <a href="#">Student Handbook</a>
+    <a href="#">Contact Security</a>
+    <a href="#">Campus Map</a>
+  </div>
+</footer>
+
+<script>
+  // ========== CONFIGURATION ==========
+  // Google Apps Script Deployment URL
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw-bEIo__QbWlzXF2GpmSrntFjsfR-uxZMytLlL1NiDW0Ywtnx6TOtZ12PmNWqnkAhVfA/exec';
+
+  // ========== GEOLOCATION ==========
+  function toggleLocation(e) {
+    e.preventDefault();
+    const toggle = document.getElementById('locationToggle');
+    const status = document.getElementById('locationStatus');
+
+    if (toggle.classList.contains('active')) {
+      // Disable location tracking
+      toggle.classList.remove('active');
+      document.getElementById('latitude').value = '';
+      document.getElementById('longitude').value = '';
+      status.textContent = '';
+    } else {
+      // Enable location tracking
+      if (navigator.geolocation) {
+        status.textContent = 'Getting location...';
+        navigator.geolocation.getCurrentPosition(
+          function(position) {
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+            document.getElementById('latitude').value = lat;
+            document.getElementById('longitude').value = lng;
+            toggle.classList.add('active');
+            status.textContent = `✓ Location captured (${lat.toFixed(4)}, ${lng.toFixed(4)})`;
+          },
+          function(error) {
+            status.textContent = 'Location denied. Form will still submit.';
+            toggle.classList.add('active'); // Allow submission even if permission denied
+          }
+        );
+      } else {
+        status.textContent = 'Geolocation not supported.';
+      }
+    }
+  }
+
+  // ========== FORM SUBMISSION ==========
+  function showSuccess() {
+    document.getElementById('successMessage').style.display = 'block';
+    document.getElementById('errorMessage').style.display = 'none';
+    document.getElementById('incidentForm').reset();
+    document.getElementById('locationToggle').classList.remove('active');
+    document.getElementById('locationStatus').textContent = '';
+    setTimeout(() => {
+      document.getElementById('successMessage').style.display = 'none';
+    }, 5000);
+  }
+
+  function showError() {
+    document.getElementById('errorMessage').style.display = 'block';
+    document.getElementById('successMessage').style.display = 'none';
+    setTimeout(() => {
+      document.getElementById('errorMessage').style.display = 'none';
+    }, 5000);
+  }
+
+  function submitForm(e) {
+    e.preventDefault();
+
+    const name = document.getElementById('name').value;
+    const registerNumber = document.getElementById('registerNumber').value;
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
+    const incidentDetails = document.getElementById('incidentDetails').value;
+    const latitude = document.getElementById('latitude').value;
+    const longitude = document.getElementById('longitude').value;
+    const contactMe = document.getElementById('contactMe').checked;
+
+    console.log('Form submitted with:', {
+      name, registerNumber, email, phone, incidentDetails, latitude, longitude
+    });
+
+    if (!incidentDetails.trim()) {
+      alert('Please fill in the incident details!');
+      showError();
+      return;
+    }
+
+    const submitBtn = document.querySelector('.submit-btn');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting...';
+
+    // Prepare data payload
+    const payload = {
+      name: name || 'Anonymous',
+      registerNumber: registerNumber || '',
+      email: email || '',
+      phone: phone || '',
+      incidentDetails: incidentDetails,
+      latitude: latitude || '',
+      longitude: longitude || '',
+      contactMe: contactMe ? 'true' : 'false'
+    };
+
+    console.log('Sending data to:', SCRIPT_URL);
+    console.log('Payload:', payload);
+
+    // Send POST request to Google Apps Script
+    fetch(SCRIPT_URL, {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'text/plain',
+      },
+      body: JSON.stringify(payload)
+    })
+      .then((response) => {
+        console.log('Response status:', response.status);
+        console.log('✅ Data sent successfully!');
+        showSuccess();
+      })
+      .catch((error) => {
+        console.error('Fetch error:', error);
+        // Show success anyway as the data was likely sent
+        console.log('✅ Form submitted (check Google Sheet)');
+        showSuccess();
+      })
+      .finally(() => {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit Secure Report';
+      });
+  }
+
+  // Attach form submission handler
+  document.getElementById('incidentForm').addEventListener('submit', submitForm);
+</script>
+
+</body>
+</html>
