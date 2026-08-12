@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="google-site-verification" content="2XGK-klFIqQs5QicUa1i0xuLK1O-_iq5JPEk7uiK45c" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="SKCET Campus Safety & Incident Reporting. Report safety concerns securely and confidentially. View campus map and emergency services.">
   <title>SKCET Safety | Campus Safety & Incident Reporting</title>
@@ -862,6 +861,27 @@
       opacity: 0.8;
     }
 
+    /* ========== STUDENT PROJECT NOTICE ========== */
+    .student-project-notice {
+      background: #fff3cd;
+      border-left: 4px solid #ffc107;
+      padding: var(--spacing-lg);
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .student-project-notice strong {
+      display: block;
+      margin-bottom: var(--spacing-sm);
+      color: #856404;
+    }
+
+    .student-project-notice p {
+      margin: 0;
+      color: #856404;
+    }
+
     /* ========== RESPONSIVE ========== */
     @media (max-width: 1024px) {
       :root {
@@ -926,7 +946,7 @@
 <header>
   <nav>
     <a href="#" class="header-brand">
-      <div class="header-brand-icon"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8beg9LHalIw-NGu5r8qVvDUbHzS6W_puTmsWpir1dvgVuu6RuCPTXHYI&s=10" alt="SKCET Logo"></div>
+      <div class="header-brand-icon"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8beg9LHalIw-NGu5r8qVvDUbHzS6W_puTmsWpir1dvgVuu6RuCPTXHYI&s=10" alt="SKCET Logo">  </div>
       <span>SKCET Safety</span>
     </a>
     <ul class="nav-links">
@@ -940,6 +960,16 @@
 
 <!-- MAIN CONTENT -->
 <main>
+
+  <div class="student-project-notice">
+    <strong>⚠️ Student Project Demo</strong>
+    <p>
+      This website is a student-developed prototype for demonstrating a
+      campus safety reporting system. It is not an official SKCET website
+      or emergency reporting service. Please do not submit real personal
+      or emergency information.
+    </p>
+  </div>
 
   <!-- SAFETY OVERVIEW SECTION -->
   <section class="hero-section" id="safety-overview">
