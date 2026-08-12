@@ -861,27 +861,6 @@
       opacity: 0.8;
     }
 
-    /* ========== STUDENT PROJECT NOTICE ========== */
-    .student-project-notice {
-      background: #fff3cd;
-      border-left: 4px solid #ffc107;
-      padding: var(--spacing-lg);
-      margin: 0;
-      font-size: 14px;
-      line-height: 1.6;
-    }
-
-    .student-project-notice strong {
-      display: block;
-      margin-bottom: var(--spacing-sm);
-      color: #856404;
-    }
-
-    .student-project-notice p {
-      margin: 0;
-      color: #856404;
-    }
-
     /* ========== RESPONSIVE ========== */
     @media (max-width: 1024px) {
       :root {
@@ -960,16 +939,6 @@
 
 <!-- MAIN CONTENT -->
 <main>
-
-  <div class="student-project-notice">
-    <strong>⚠️ Student Project Demo</strong>
-    <p>
-      This website is a student-developed prototype for demonstrating a
-      campus safety reporting system. It is not an official SKCET website
-      or emergency reporting service. Please do not submit real personal
-      or emergency information.
-    </p>
-  </div>
 
   <!-- SAFETY OVERVIEW SECTION -->
   <section class="hero-section" id="safety-overview">
@@ -1143,7 +1112,7 @@
 <footer>
   <div class="footer-content">
     <h3>SKCET Safety</h3>
-    <p>© 2024 Sri Krishna College of Engineering and Technology. Institutional Safety Division.</p>
+    <p>© 2026 Sri Krishna College of Engineering and Technology. Institutional Safety Division.</p>
     <div class="footer-links">
       <a href="#campus-map">Campus Map</a>
       <a href="#report-incident">Report Incident</a>
@@ -1329,29 +1298,6 @@ document.addEventListener('keydown', function (e) {
   }
 });
 
-// ===== DISCLAIMER MODAL =====
-window.addEventListener('DOMContentLoaded', function() {
-  const disclaimer = document.createElement('div');
-  disclaimer.id = 'disclaimerModal';
-  disclaimer.innerHTML = `
-    <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; display: flex; align-items: center; justify-content: center;">
-      <div style="background: white; padding: 40px; border-radius: 12px; max-width: 500px; text-align: center; box-shadow: 0 8px 32px rgba(0,0,0,0.2);">
-        <h2 style="color: #c62828; margin-bottom: 20px; font-size: 24px;">⚠️ DEMO PROJECT ONLY</h2>
-        <p style="font-size: 16px; line-height: 1.6; margin-bottom: 20px; color: #333;">
-          This is a <strong>student-developed educational prototype</strong>. 
-          It is <strong>NOT</strong> a real campus safety reporting system.
-        </p>
-        <p style="color: #d32f2f; font-weight: bold; margin-bottom: 30px; font-size: 15px;">
-          ❌ DO NOT submit real personal, emergency, or sensitive information.
-        </p>
-        <button onclick="document.getElementById('disclaimerModal').style.display='none'" style="padding: 12px 30px; background: #003d66; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; transition: all 0.2s ease;" onmouseover="this.style.background='#002d4d'" onmouseout="this.style.background='#003d66'">
-          I Understand - Continue to Demo
-        </button>
-      </div>
-    </div>
-  `;
-  document.body.appendChild(disclaimer);
-});
 </script>
 
 </body>
