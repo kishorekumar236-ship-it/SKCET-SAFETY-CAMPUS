@@ -1112,7 +1112,7 @@
 <footer>
   <div class="footer-content">
     <h3>SKCET Safety</h3>
-    <p>© 2026 Sri Krishna College of Engineering and Technology. Institutional Safety Division.</p>
+    <p>© 2024 Sri Krishna College of Engineering and Technology. Institutional Safety Division.</p>
     <div class="footer-links">
       <a href="#campus-map">Campus Map</a>
       <a href="#report-incident">Report Incident</a>
@@ -1297,6 +1297,380 @@ document.addEventListener('keydown', function (e) {
     closeMapModal();
   }
 });
+
+// ========== AI CHATBOT ASSISTANT ==========
+(function() {
+  // Knowledge base for chatbot responses
+  const aiBot_knowledgeBase = [
+    {
+      keywords: ['emergency', 'help', 'urgent', 'call police', '112', 'ambulance'],
+      response: 'Emergency services can be reached by calling 112. This number is available 24/7 for urgent situations. Please describe your emergency clearly to the dispatcher.'
+    },
+    {
+      keywords: ['report', 'incident', 'submit', 'file'],
+      response: 'You can submit a safety incident using the Report Incident section in this application. Fill in the incident details, and you can optionally share your location and attach photos. All reports are handled confidentially.'
+    },
+    {
+      keywords: ['map', 'campus', 'location', 'navigate', 'directions'],
+      response: 'You can view the campus map in the Campus Map section of this application. The map shows key locations and safety zones. You can zoom in and out to explore different areas.'
+    },
+    {
+      keywords: ['safety', 'tips', 'advice', 'secure', 'protect'],
+      response: 'Campus safety tips: Stay alert and aware of your surroundings. Avoid isolated areas, especially at night. Report suspicious activities immediately. Walk in groups when possible. Keep emergency numbers handy. Use well-lit paths and inform someone of your whereabouts.'
+    },
+    {
+      keywords: ['contact', 'security', 'campus security', 'guard', 'officer'],
+      response: 'To contact campus security, email safety@skcet.ac.in or use the emergency number 112 for urgent situations. You can also submit an incident report through this application.'
+    },
+    {
+      keywords: ['hello', 'hi', 'hey', 'greetings', 'good morning', 'good evening'],
+      response: 'Hello! I\'m the SKCET Safety Assistant. I\'m here to help with any questions about campus safety, emergency information, incident reporting, navigation, or safety advice. How can I assist you?'
+    },
+    {
+      keywords: ['thank', 'thanks', 'thank you', 'appreciate'],
+      response: 'You\'re welcome! If you have any other questions about campus safety, feel free to ask. Your safety is our priority.'
+    },
+    {
+      keywords: ['lost', 'where', 'how to get', 'directions to'],
+      response: 'You can use the Campus Map section to find locations and navigate around the campus. If you need specific directions, check the interactive map and use the zoom feature to locate your destination.'
+    }
+  ];
+
+  // Function to get chatbot response
+  function aiBot_getResponse(userMessage) {
+    const lowerMsg = userMessage.toLowerCase().trim();
+    
+    for (let item of aiBot_knowledgeBase) {
+      for (let keyword of item.keywords) {
+        if (lowerMsg.includes(keyword)) {
+          return item.response;
+        }
+      }
+    }
+    
+    return 'I am the SKCET Safety Assistant. I can help with campus safety, emergency information, reporting incidents, and navigation. Feel free to ask me anything related to safety!';
+  }
+
+  // Create chatbot HTML structure
+  function aiBot_initChatbot() {
+    // Create styles
+    const aiBot_style = document.createElement('style');
+    aiBot_style.innerHTML = `
+      #aiBot_button {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: #00796b;
+        color: white;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        z-index: 999;
+        transition: all 0.3s ease;
+      }
+
+      #aiBot_button:hover {
+        background: #00695c;
+        transform: scale(1.1);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+      }
+
+      #aiBot_button:active {
+        transform: scale(0.95);
+      }
+
+      #aiBot_window {
+        position: fixed;
+        bottom: 90px;
+        right: 20px;
+        width: 360px;
+        height: 500px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+        display: none;
+        flex-direction: column;
+        z-index: 998;
+        overflow: hidden;
+      }
+
+      #aiBot_window.active {
+        display: flex;
+      }
+
+      #aiBot_header {
+        background: #003d66;
+        color: white;
+        padding: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-shrink: 0;
+      }
+
+      #aiBot_header h3 {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 600;
+      }
+
+      #aiBot_closeBtn {
+        background: none;
+        border: none;
+        color: white;
+        cursor: pointer;
+        font-size: 20px;
+        padding: 0;
+        width: 28px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+      }
+
+      #aiBot_closeBtn:hover {
+        transform: rotate(90deg);
+      }
+
+      #aiBot_messagesArea {
+        flex: 1;
+        overflow-y: auto;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        background: #f9f9f9;
+      }
+
+      .aiBot_message {
+        display: flex;
+        gap: 8px;
+        animation: slideIn 0.3s ease;
+      }
+
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .aiBot_message.bot {
+        justify-content: flex-start;
+      }
+
+      .aiBot_message.user {
+        justify-content: flex-end;
+      }
+
+      .aiBot_messageBubble {
+        max-width: 80%;
+        padding: 10px 14px;
+        border-radius: 8px;
+        font-size: 14px;
+        line-height: 1.5;
+        word-wrap: break-word;
+      }
+
+      .aiBot_message.bot .aiBot_messageBubble {
+        background: #e8f5e9;
+        color: #1a1a1a;
+        border-bottom-left-radius: 2px;
+      }
+
+      .aiBot_message.user .aiBot_messageBubble {
+        background: #00796b;
+        color: white;
+        border-bottom-right-radius: 2px;
+      }
+
+      #aiBot_inputArea {
+        display: flex;
+        gap: 8px;
+        padding: 12px;
+        background: white;
+        border-top: 1px solid #e0e0e0;
+        flex-shrink: 0;
+      }
+
+      #aiBot_input {
+        flex: 1;
+        border: 1px solid #e0e0e0;
+        border-radius: 6px;
+        padding: 10px 12px;
+        font-size: 14px;
+        font-family: inherit;
+        transition: border-color 0.2s ease;
+      }
+
+      #aiBot_input:focus {
+        outline: none;
+        border-color: #00796b;
+        box-shadow: 0 0 0 2px rgba(0, 121, 107, 0.1);
+      }
+
+      #aiBot_sendBtn {
+        background: #00796b;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        padding: 10px 16px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 14px;
+        transition: all 0.2s ease;
+        flex-shrink: 0;
+      }
+
+      #aiBot_sendBtn:hover {
+        background: #00695c;
+      }
+
+      #aiBot_sendBtn:active {
+        transform: scale(0.95);
+      }
+
+      #aiBot_sendBtn:disabled {
+        background: #999;
+        cursor: not-allowed;
+        opacity: 0.6;
+      }
+
+      @media (max-width: 480px) {
+        #aiBot_window {
+          width: calc(100% - 40px);
+          height: 400px;
+          bottom: 90px;
+          right: 20px;
+        }
+
+        .aiBot_messageBubble {
+          max-width: 90%;
+        }
+      }
+
+      /* Scrollbar styling */
+      #aiBot_messagesArea::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      #aiBot_messagesArea::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      #aiBot_messagesArea::-webkit-scrollbar-thumb {
+        background: #ccc;
+        border-radius: 3px;
+      }
+
+      #aiBot_messagesArea::-webkit-scrollbar-thumb:hover {
+        background: #999;
+      }
+    `;
+    document.head.appendChild(aiBot_style);
+
+    // Create chatbot button
+    const aiBot_button = document.createElement('button');
+    aiBot_button.id = 'aiBot_button';
+    aiBot_button.innerHTML = '💬';
+    aiBot_button.setAttribute('aria-label', 'Open chat with safety assistant');
+
+    // Create chatbot window
+    const aiBot_window = document.createElement('div');
+    aiBot_window.id = 'aiBot_window';
+    aiBot_window.innerHTML = `
+      <div id="aiBot_header">
+        <h3>SKCET Safety AI Assistant</h3>
+        <button id="aiBot_closeBtn" aria-label="Close chatbot">✕</button>
+      </div>
+      <div id="aiBot_messagesArea"></div>
+      <div id="aiBot_inputArea">
+        <input type="text" id="aiBot_input" placeholder="Ask about safety..." />
+        <button id="aiBot_sendBtn">Send</button>
+      </div>
+    `;
+
+    // Append to body
+    document.body.appendChild(aiBot_button);
+    document.body.appendChild(aiBot_window);
+
+    // Get elements
+    const aiBot_messagesArea = document.getElementById('aiBot_messagesArea');
+    const aiBot_input = document.getElementById('aiBot_input');
+    const aiBot_sendBtn = document.getElementById('aiBot_sendBtn');
+    const aiBot_closeBtn = document.getElementById('aiBot_closeBtn');
+
+    // Function to add message
+    function aiBot_addMessage(text, isBot) {
+      const messageDiv = document.createElement('div');
+      messageDiv.className = 'aiBot_message ' + (isBot ? 'bot' : 'user');
+      messageDiv.innerHTML = `<div class="aiBot_messageBubble">${text}</div>`;
+      aiBot_messagesArea.appendChild(messageDiv);
+      aiBot_messagesArea.scrollTop = aiBot_messagesArea.scrollHeight;
+    }
+
+    // Function to send message
+    function aiBot_sendMessage() {
+      const message = aiBot_input.value.trim();
+      if (!message) return;
+
+      aiBot_addMessage(message, false);
+      aiBot_input.value = '';
+      aiBot_sendBtn.disabled = true;
+
+      // Simulate bot thinking
+      setTimeout(() => {
+        const response = aiBot_getResponse(message);
+        aiBot_addMessage(response, true);
+        aiBot_sendBtn.disabled = false;
+        aiBot_input.focus();
+      }, 300);
+    }
+
+    // Event listeners
+    aiBot_button.addEventListener('click', () => {
+      aiBot_window.classList.toggle('active');
+      if (aiBot_window.classList.contains('active')) {
+        aiBot_input.focus();
+        // Add initial greeting
+        if (aiBot_messagesArea.children.length === 0) {
+          aiBot_addMessage('Hello! 👋 I\'m the SKCET Safety Assistant. How can I help you today?', true);
+        }
+      }
+    });
+
+    aiBot_closeBtn.addEventListener('click', () => {
+      aiBot_window.classList.remove('active');
+    });
+
+    aiBot_sendBtn.addEventListener('click', aiBot_sendMessage);
+
+    aiBot_input.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        aiBot_sendMessage();
+      }
+    });
+  }
+
+  // Initialize chatbot when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', aiBot_initChatbot);
+  } else {
+    aiBot_initChatbot();
+  }
+})();
 
 </script>
 
