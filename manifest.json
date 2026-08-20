@@ -1,0 +1,16 @@
+{
+  "name": "SKCET Safety - Campus Safety & Incident Reporting",
+  "short_name": "SKCET Safety",
+  "description": "Campus Safety & Incident Reporting Application",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#003d66",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%23003d66' width='192' height='192' rx='45'/><text x='96' y='110' font-size='100' fill='white' text-anchor='middle' font-weight='bold'>S</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    }
+  ]
+}
