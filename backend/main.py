@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -47,7 +48,7 @@ def chat(request: ChatRequest):
     
     try:
         messages = [
-            {"role": "system", "content": CAMPUS_SAFETY_CONTEXT}
+            {"role": "system", "content": SYSTEM_PROMPT}
         ] + conversation_history
         
         response = client.chat.completions.create(
