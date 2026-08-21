@@ -16,7 +16,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-OLLAMA_URL = "http://127.0.0.1:11434/api/generate"
+from groq import Groq
+client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 conversation_history = []
 
 SYSTEM_PROMPT = """You are SKCET Campus Safety Chatbot. Help with:
@@ -39,34 +40,29 @@ def home():
 def chat(request: ChatRequest):
     global conversation_history
     
-    print(f"[BACKEND] Received: {request.message}")
-    
-    conversation_history.append({"role": "user", "content": request.message})
+    conversation_history.append({
+        "role": "user",
+        "content": request.message
+    })
     
     try:
-        prompt = SYSTEM_PROMPT + "\n\n"
-        for msg in conversation_history[-6:]:
-            prompt += f"{msg['role'].title()}: {msg['content']}\n"
-        prompt += "Assistant: "
+        messages = [
+            {"role": "system", "content": CAMPUS_SAFETY_CONTEXT}
+        ] + conversation_history
         
-        print(f"[BACKEND] Calling Ollama at {OLLAMA_URL}")
-        
-        response = requests.post(
-            OLLAMA_URL,
-            json={"model": "llama2", "prompt": prompt, "stream": False},
-            timeout=120
+        response = client.chat.completions.create(
+            model="mixtral-8x7b-32768",
+            messages=messages,
+            max_tokens=150,
+            temperature=0.7
         )
         
-        if response.status_code != 200:
-            print(f"[BACKEND] Ollama error: {response.status_code}")
-            raise Exception(f"Ollama error: {response.status_code}")
+        reply = response.choices[0].message.content
         
-        data = response.json()
-        reply = data.get("response", "").strip()
-        
-        print(f"[BACKEND] Got reply: {reply[:50]}...")
-        
-        conversation_history.append({"role": "assistant", "content": reply})
+        conversation_history.append({
+            "role": "assistant",
+            "content": reply
+        })
         
         if len(conversation_history) > 10:
             conversation_history = conversation_history[-10:]
@@ -74,6 +70,5 @@ def chat(request: ChatRequest):
         return {"reply": reply}
     
     except Exception as e:
-        error_msg = str(e)
-        print(f"[BACKEND] ERROR: {error_msg}")
-        return {"reply": f"Backend error: {error_msg}", "error": error_msg}
+        print(f"Error: {str(e)}")
+        return {"reply": f"Error: {str(e)}", "error": str(e)}
