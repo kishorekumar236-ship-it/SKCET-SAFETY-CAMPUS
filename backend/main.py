@@ -37,33 +37,30 @@ class ChatRequest(BaseModel):
 def home():
     return {"status": "ok", "message": "SKCET Chatbot API"}
 
+import requests
+
+OLLAMA_URL = "http://ollama:11434/api/generate"
+
 @app.post("/chat")
 def chat(request: ChatRequest):
     global conversation_history
     
-    conversation_history.append({
-        "role": "user",
-        "content": request.message
-    })
+    conversation_history.append({"role": "user", "content": request.message})
     
     try:
-        messages = [
-            {"role": "system", "content": SYSTEM_PROMPT}
-        ] + conversation_history
+        prompt = SYSTEM_PROMPT + "\n\n"
+        for msg in conversation_history[-6:]:
+            prompt += f"{msg['role'].capitalize()}: {msg['content']}\n"
+        prompt += "Assistant: "
         
-        response = client.chat.completions.create(
-            model="llama2-70b-4096",
-            messages=messages,
-            max_tokens=150,
-            temperature=0.7
+        response = requests.post(
+            OLLAMA_URL,
+            json={"model": "llama2", "prompt": prompt, "stream": False},
+            timeout=60
         )
         
-        reply = response.choices[0].message.content
-        
-        conversation_history.append({
-            "role": "assistant",
-            "content": reply
-        })
+        reply = response.json().get("response", "").strip()
+        conversation_history.append({"role": "assistant", "content": reply})
         
         if len(conversation_history) > 10:
             conversation_history = conversation_history[-10:]
@@ -71,5 +68,4 @@ def chat(request: ChatRequest):
         return {"reply": reply}
     
     except Exception as e:
-        print(f"Error: {str(e)}")
         return {"reply": f"Error: {str(e)}", "error": str(e)}
