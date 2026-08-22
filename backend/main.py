@@ -52,7 +52,7 @@ def chat(request: ChatRequest):
         ] + conversation_history
         
         response = client.chat.completions.create(
-            model="llama-3.3-70b-versatile",
+            model="mixtral-8x7b-32768",  # Change this line
             messages=messages,
             max_tokens=150,
             temperature=0.7
