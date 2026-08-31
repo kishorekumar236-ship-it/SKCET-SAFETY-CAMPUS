@@ -21,9 +21,10 @@ from groq import Groq
 client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 conversation_history = []
 
-SYSTEM_PROMPT = """You are SKCET Campus Safety AI Assistant. 
-Keep responses SHORT and CONCISE (2-3 sentences max).
-Help with campus safety, emergencies (112), incident reporting, and security."""
+SYSTEM_PROMPT = """You are SKCET Campus Safety AI Assistant.
+Answer VERY BRIEFLY (1-2 sentences only).
+Help with: campus safety, emergencies (112), incident reporting, security.
+Keep it SHORT."""
 
 class ChatRequest(BaseModel):
     message: str
