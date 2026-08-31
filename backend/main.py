@@ -21,14 +21,9 @@ from groq import Groq
 client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 conversation_history = []
 
-SYSTEM_PROMPT = """You are SKCET Campus Safety Chatbot. Help with:
-- Emergency procedures (call 112)
-- Incident reporting
-- Campus safety advice
-- Emergency exits and evacuation
-- Security contacts: safety@skcet.ac.in
-- Fire safety
-Keep responses short and practical."""
+SYSTEM_PROMPT = """You are SKCET Campus Safety AI Assistant. 
+Keep responses SHORT and CONCISE (2-3 sentences max).
+Help with campus safety, emergencies (112), incident reporting, and security."""
 
 class ChatRequest(BaseModel):
     message: str
