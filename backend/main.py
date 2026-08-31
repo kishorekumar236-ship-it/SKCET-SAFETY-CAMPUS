@@ -8,7 +8,6 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = FastAPI()
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -17,8 +16,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-from groq import Groq
-client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 conversation_history = []
 
 SYSTEM_PROMPT = """You are SKCET Campus Safety AI Assistant.
@@ -33,9 +30,8 @@ class ChatRequest(BaseModel):
 def home():
     return {"status": "ok", "message": "SKCET Chatbot API"}
 
-import requests
-
-OLLAMA_URL = "http://ollama:11434/api/generate"
+# FIXED: Use localhost, not docker hostname
+OLLAMA_URL = "http://127.0.0.1:11434/api/generate"
 
 @app.post("/chat")
 def chat(request: ChatRequest):
@@ -49,9 +45,15 @@ def chat(request: ChatRequest):
             prompt += f"{msg['role'].capitalize()}: {msg['content']}\n"
         prompt += "Assistant: "
         
+        # FIXED: Added max_tokens=50 for faster responses
         response = requests.post(
             OLLAMA_URL,
-            json={"model": "llama2", "prompt": prompt, "stream": False},
+            json={
+                "model": "llama2",
+                "prompt": prompt,
+                "stream": False,
+                "num_predict": 50  # Limit response length
+            },
             timeout=60
         )
         
