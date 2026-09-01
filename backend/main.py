@@ -52,7 +52,7 @@ def chat(request: ChatRequest):
                 "model": "llama2",
                 "prompt": prompt,
                 "stream": False,
-                "num_predict": 25  # Limit response length
+                "num_predict": 15  # Limit response length
             },
             timeout=60
         )
